@@ -40,9 +40,9 @@ sudo apt install -y git curl ca-certificates \
 
 ```bash
 cd /opt
-sudo git clone https://github.com/pyted/binance_resender.git
-sudo chown -R $USER:$USER /opt/binance_resender
-cd /opt/binance_resender
+sudo git clone https://github.com/pyted/binance_cn.git
+sudo chown -R $USER:$USER /opt/binance_cn
+cd /opt/binance_cn
 ```
 
 #### 2.1.3 创建虚拟环境并安装依赖
@@ -54,17 +54,12 @@ python -m pip install -U pip
 pip install -r requirements.txt
 ```
 
-#### 2.1.4 初始化数据库与管理员
+#### 2.1.4 管理员登录
 
 ```bash
-python manage.py migrate
-python manage.py createsuperuser
-```
-
-#### 2.1.5 启动服务
-
-```bash
-python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
+用户名：root
+默认密码： 123456
+登录地址： http://your_ip/admin_resender.asgi:application --host 0.0.0.0 --port 80
 ```
 
 可选放行防火墙端口（如果开启了 UFW）：
