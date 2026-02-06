@@ -1,8 +1,15 @@
-Django==6.0.2
-uvicorn==0.40.0
+# Django versions are selected by Python runtime:
+# - Python >= 3.12: Django 6
+# - Python 3.10/3.11: Django 5.2 LTS
+# - Python <= 3.9: Django 4.2 LTS
+Django==6.0.2; python_version >= "3.12"
+Django==5.2.11; python_version >= "3.10" and python_version < "3.12"
+Django==4.2.28; python_version < "3.10"
+uvicorn==0.39.0
 requests==2.32.5
 urllib3>=2.5.0,<3.0
 pysqlite3-binary==0.5.4.post2
+websockets==15.0.1
 candlelite>=1.0.17
 paux>=1.0.14
-binance_interface>=2.0.5
+python-binance==1.0.34

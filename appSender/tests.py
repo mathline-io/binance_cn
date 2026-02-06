@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 
 import appSite.globalvar as gv
+from binance_resender.ws_proxy import _resolve_target_url
 
 
 class DummyUpstreamResponse:
@@ -10,7 +11,7 @@ class DummyUpstreamResponse:
         self.status_code = status_code
         self.content = content
         self.headers = headers or {"Content-Type": "application/json"}
-        self.text = text
+        self.text = text if text is not None else content.decode("utf-8", errors="ignore")
 
 
 class ResenderViewTests(TestCase):
@@ -105,3 +106,18 @@ class ResenderViewTests(TestCase):
 
         self.assertEqual(response.status_code, 403)
         request_mock.assert_not_called()
+
+    @override_settings(BINANCE_WS_ENDPOINTS={"spot": "wss://stream.binance.com:9443"})
+    def test_ws_target_url_resolution_with_query(self):
+        target_url = _resolve_target_url(
+            path="/ws/spot/stream",
+            query_string=b"streams=btcusdt@trade/ethusdt@trade",
+        )
+        self.assertEqual(
+            target_url,
+            "wss://stream.binance.com:9443/stream?streams=btcusdt@trade/ethusdt@trade",
+        )
+
+    @override_settings(BINANCE_WS_ENDPOINTS={"spot": "wss://stream.binance.com:9443"})
+    def test_ws_target_url_resolution_invalid_path(self):
+        self.assertIsNone(_resolve_target_url(path="/ws/spot", query_string=b""))

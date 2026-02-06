@@ -60,6 +60,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'binance_resender.wsgi.application'
+ASGI_APPLICATION = 'binance_resender.asgi.application'
 
 
 DATABASES = {
@@ -119,4 +120,19 @@ BINANCE_ENDPOINTS = {
     'papi': _endpoint_env('BINANCE_PAPI_BASE_URL', 'https://papi.binance.com'),
     # Legacy options prefix compatibility
     'vapi': _endpoint_env('BINANCE_VAPI_BASE_URL', 'https://eapi.binance.com'),
+}
+
+BINANCE_WS_ENDPOINTS = {
+    # Spot market and user-data streams
+    'spot': _endpoint_env('BINANCE_WS_SPOT_URL', 'wss://stream.binance.com:9443'),
+    # USD-M futures market and user-data streams
+    'usdm': _endpoint_env('BINANCE_WS_USDM_URL', 'wss://fstream.binance.com'),
+    # COIN-M futures market and user-data streams
+    'coinm': _endpoint_env('BINANCE_WS_COINM_URL', 'wss://dstream.binance.com'),
+    # Vanilla options streams
+    'options': _endpoint_env('BINANCE_WS_OPTIONS_URL', 'wss://nbstream.binance.com/eoptions'),
+    # Portfolio margin streams
+    'pm': _endpoint_env('BINANCE_WS_PM_URL', 'wss://fstream.binance.com/pm'),
+    # Cross margin risk stream
+    'margin': _endpoint_env('BINANCE_WS_MARGIN_URL', 'wss://margin-stream.binance.com'),
 }
