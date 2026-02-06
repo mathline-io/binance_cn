@@ -1,0 +1,8 @@
+Django==6.0.2
+uvicorn==0.40.0
+requests==2.32.5
+urllib3>=2.5.0,<3.0
+pysqlite3-binary==0.5.4.post2
+candlelite>=1.0.17
+paux>=1.0.14
+binance_interface>=2.0.5
