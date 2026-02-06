@@ -169,7 +169,7 @@ sudo journalctl -u binance-resender -f
 
 ```bash
 cd /root
-git clone https://github.com/mathline-io/binance_cn
+git clone https://github.com/mathline-io/binance_cn.git
 cd binance_cn
 python3 -m venv .venv
 source .venv/bin/activate
