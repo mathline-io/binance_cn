@@ -65,7 +65,7 @@ pip install -r requirements.txt
 #### 2.1.5 启动服务
 
 ```bash
-python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
+python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
 ```
 
 可选放行防火墙端口（如果开启了 UFW）：
@@ -115,7 +115,7 @@ pip install -r requirements.txt
 #### 2.2.5 启动服务
 
 ```bash
-python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
+python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
 ```
 
 可选放行防火墙端口（如果开启 firewalld）：
@@ -142,7 +142,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/opt/binance_cn
-ExecStart=/opt/binance_cn/.venv/bin/python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
+ExecStart=/opt/binance_cn/.venv/bin/python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
 Restart=always
 RestartSec=3
 
@@ -194,7 +194,7 @@ python manage.py createsuperuser
 ### 3.3 启动服务
 
 ```bash
-python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
+python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
 ```
 
 ## 4. HTTP 端点映射（最新版）
