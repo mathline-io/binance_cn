@@ -1,6 +1,6 @@
-# Binance_resender（升级版）
+# Binance Resender（Mathline版）
 
-Binance_resender 是一个 Binance HTTP API 转发服务，适合把策略服务部署在内地/内网机器，通过境外轻量转发节点访问 Binance。
+Binance Resender 是一个 Binance HTTP API 转发服务，适合把策略服务部署在内地/内网机器，通过境外轻量转发节点访问 Binance。
 
 本仓库已升级为支持新版本 Python 与新依赖，并修复了旧版的关键兼容问题：
 - 升级到现代 Django / Uvicorn / Requests 版本
@@ -40,7 +40,7 @@ sudo apt install -y git curl ca-certificates \
 
 ```bash
 cd /opt
-sudo git clone https://github.com/pyted/binance_cn.git
+sudo git clone https://github.com/mathline-io/binance_cn.git
 sudo chown -R $USER:$USER /opt/binance_cn
 cd /opt/binance_cn
 ```
@@ -59,7 +59,13 @@ pip install -r requirements.txt
 ```bash
 用户名：root
 默认密码： 123456
-登录地址： http://your_ip/admin_resender.asgi:application --host 0.0.0.0 --port 80
+登录地址： http://your_ip/admin
+```
+
+#### 2.1.5 启动服务
+
+```bash
+python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
 ```
 
 可选放行防火墙端口（如果开启了 UFW）：
@@ -84,9 +90,9 @@ sudo dnf -y install git curl ca-certificates \
 
 ```bash
 cd /opt
-sudo git clone https://github.com/pyted/binance_resender.git
-sudo chown -R $USER:$USER /opt/binance_resender
-cd /opt/binance_resender
+sudo git clone https://github.com/mathline-io/binance_cn.git
+sudo chown -R $USER:$USER /opt/binance_cn
+cd /opt/binance_cn
 ```
 
 #### 2.2.3 创建虚拟环境并安装依赖
@@ -98,17 +104,18 @@ python -m pip install -U pip
 pip install -r requirements.txt
 ```
 
-#### 2.2.4 初始化数据库与管理员
+#### 2.2.4 管理员登录
 
 ```bash
-python manage.py migrate
-python manage.py createsuperuser
+用户名：root
+默认密码： 123456
+登录地址： http://your_ip/admin
 ```
 
 #### 2.2.5 启动服务
 
 ```bash
-python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
+python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
 ```
 
 可选放行防火墙端口（如果开启 firewalld）：
@@ -126,7 +133,7 @@ sudo firewall-cmd --reload
 创建服务文件：
 
 ```bash
-sudo tee /etc/systemd/system/binance-resender.service >/dev/null <<'EOF'
+sudo tee /etc/systemd/system/binance-cn.service >/dev/null <<'EOF'
 [Unit]
 Description=Binance Resender
 After=network.target
@@ -134,8 +141,8 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/binance_resender
-ExecStart=/opt/binance_resender/.venv/bin/python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
+WorkingDirectory=/opt/binance_cn
+ExecStart=/opt/binance_cn/.venv/bin/python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
 Restart=always
 RestartSec=3
 
@@ -162,8 +169,8 @@ sudo journalctl -u binance-resender -f
 
 ```bash
 cd /root
-git clone https://github.com/pyted/binance_resender
-cd binance_resender
+git clone https://github.com/mathline-io/binance_cn
+cd binance_cn
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -U pip
@@ -187,7 +194,7 @@ python manage.py createsuperuser
 ### 3.3 启动服务
 
 ```bash
-python -m uvicorn binance_resender.asgi:application --host 0.0.0.0 --port 80
+python -m uvicorn binance_cn.asgi:application --host 0.0.0.0 --port 80
 ```
 
 ## 4. HTTP 端点映射（最新版）
